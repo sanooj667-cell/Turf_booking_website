@@ -1,0 +1,48 @@
+{% load static %}
+
+<header class="w-full bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+
+        <!-- Logo -->
+        <h1 class="text-2xl font-bold text-green-600">TURFY</h1>
+
+        <!-- Desktop Menu -->
+        <nav class="hidden md:flex space-x-8 text-gray-600 font-medium">
+            <a href="#" class="hover:text-green-600 transition">Home</a>
+            <a href="#" class="hover:text-green-600 transition">Turfs</a>
+            <a href="#" class="hover:text-green-600 transition">About</a>
+            <a href="#" class="hover:text-green-600 transition">Contact</a>
+        </nav>
+
+        <!-- Desktop Login Button -->
+        <div class="hidden md:block">
+            <a href="#" class="px-5 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition">
+                Login
+            </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button onclick="toggleMenu()" class="md:hidden text-3xl text-gray-700">
+            ☰
+        </button>
+    </div>
+
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white px-4 pb-4 shadow">
+
+        <a href="#" class="block py-2 text-gray-700 font-medium hover:text-green-600">Home</a>
+        <a href="#" class="block py-2 text-gray-700 font-medium hover:text-green-600">Turfs</a>
+        <a href="#" class="block py-2 text-gray-700 font-medium hover:text-green-600">About</a>
+        <a href="#" class="block py-2 text-gray-700 font-medium hover:text-green-600">Contact</a>
+
+        <a href="#" class="block mt-3 w-full text-center py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
+            Login
+        </a>
+    </div>
+</header>
+
+<script>
+function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('hidden');
+}
+</script>

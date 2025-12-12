@@ -1,0 +1,103 @@
+{% extends 'base/web-base.html' %}
+
+{% load static %}
+
+{% block container %}
+
+
+{% include 'includes/header.html' %}
+
+
+
+<!-- HERO SECTION -->
+<section class="relative w-full h-[60vh] bg-cover bg-center"
+    style="background-image: url('../static/images/t_homebg.png'); background-position: center; background-size: cover;">
+
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+
+    <div class="relative max-w-3xl mx-auto text-center text-white pt-24 px-4">
+        <h2 class="text-4xl font-bold mb-4">Book Your Turf Instantly</h2>
+        <p class="text-lg mb-6">Find the best sports turfs near you and play anytime.</p>
+
+
+        <div class="w-[98%] md:w-[60%] lg:w-[50%] mx-auto mt-6 
+                    flex items-center 
+                    backdrop-blur-md bg-white/5 border border-white/20 
+                    rounded-xl p-3">
+
+            <input type="text" placeholder="Search Turf..." class="flex-1 bg-transparent text-white placeholder-gray-200 px-1 py-2 
+                    focus:outline-none">
+
+            <button class="px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                Search
+            </button>
+
+        </div>
+
+
+    </div>
+</section>
+
+
+<!-- CATEGORY SECTION -->
+<section class="max-w-7xl mx-auto px-4 py-12">
+    <h3 class="text-2xl font-bold text-gray-800 mb-6">Sports Categories</h3>
+
+    <div class="grid grid-cols-3 sm:grid-cols-6 gap-6 text-center">
+        {% for cat in categories %}
+        <div>
+            <div
+                class="w-16 h-16 mx-auto bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl">
+                {{ cat.icon }}
+            </div>
+            <p class="mt-2 font-medium text-gray-700">{{ cat.name }}</p>
+        </div>
+        {% endfor %}
+
+    </div>
+</section>
+
+
+<!-- TURF LISTING -->
+<section class="max-w-7xl mx-auto px-4 pb-16">
+    <h3 class="text-2xl font-bold text-gray-800 mb-6">Available Turfs</h3>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        {% for tur in turf%}
+        <div class="bg-white rounded-lg shadow hover:shadow-md transition">
+            <img src="{{ tur.image.url }}" class="rounded-t-lg h-48 w-full object-cover">
+            <div class="p-4">
+                <h4 class="text-lg font-bold text-gray-700">{{ tur.name }}</h4>
+                <p class="text-gray-500 text-sm mb-3">{{tur.location}}</p>
+                <p class="font-bold text-green-600">₹{{ tur.price }} / hour</p>
+                <a href="{% url 'web:single_turf' tur.id %}" class="mt-3 w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 block text-center">
+                    Book Now
+                </a>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-white py-6">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <h3 class="text-xl font-bold">TURFY</h3>
+        <p class="text-gray-400 text-sm mt-2">Book your favorite turfs anytime, anywhere.</p>
+        <p class="text-gray-500 text-sm mt-4">© 2025 TURFY. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+
+<script>
+    function toggleMenu() {
+        document.getElementById('mobileMenu').classList.toggle('hidden');
+    }
+</script>
+
+
+{% endblock %}
