@@ -14,6 +14,24 @@
             Register
         </h2>
 
+
+        {% if messages %}
+            <div class="space-y-2 mb-4">
+                {% for message in messages %}
+                    <div class="
+                    px-4 py-3 rounded-lg text-white 
+                    {% if message.tags == 'error' %} bg-red-500 
+                    {% elif message.tags == 'success' %} bg-green-600 
+                    {% elif message.tags == 'warning' %} bg-yellow-500 
+                    {% else %} bg-blue-500 {% endif %}
+                    ">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                </div>
+         {% endif %}
+
+
         <form method="POST">
             {% csrf_token %}
 

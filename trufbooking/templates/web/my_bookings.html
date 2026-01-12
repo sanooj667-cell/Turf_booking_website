@@ -1,0 +1,74 @@
+{% extends 'base/web-base.html' %}
+
+{% block container %}
+{% include 'includes/header.html' %}
+
+
+
+<div class="max-w-5xl mx-auto mt-10 px-4">
+
+    <h2 class="text-3xl font-bold mb-6 text-green-600">
+        My Bookings
+    </h2>
+
+    {% if bookings %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {% for booking in bookings %}
+                <div class="bg-white p-5 rounded-lg shadow">
+
+                    <h3 class="text-xl font-bold text-gray-800">
+                        {{ booking.turf.name }} ({{ booking.turf.category }})
+                    </h3>
+
+                    <p class="text-gray-600 mt-1">
+                        {{ booking.turf.location }}
+                    </p>
+
+                    <p class="mt-2">
+                        <span class="font-semibold">Date:</span>
+                        {{ booking.booking_date }}
+                    </p>
+
+                    <p>
+                        <span class="font-semibold">Time:</span>
+                        {{ booking.start_time }} – {{ booking.end_time }}
+                    </p>
+
+                    <p class="mt-2">
+                        <span class="font-semibold">Status:</span>
+                        {{ booking.status }}
+                    </p>
+
+                    <p class="mt-2 text-green-600 font-bold">
+                        ₹{{ booking.totel_price }}
+                    </p>
+
+                    <!-- 🔴 REMOVE / CANCEL BUTTON -->
+                     {% if booking.status != "CANCELLED" %}
+                    <a href="{% url 'web:cancel_booking' booking.id%}"
+                       class="mt-4 inline-block px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
+                        Cancel Booking
+                    </a>
+                    {% endif %}
+
+                    {% if booking.status == "CANCELLED" %}
+                    <a href="{% url 'web:delete_booking' booking.id%}"
+                       class="mt-4 inline-block px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
+                        delete form history
+                    </a>
+                    {% endif %}
+
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="bg-white p-6 rounded-lg shadow">
+            <p class="text-gray-600 text-center">
+                You have no bookings yet.
+            </p>
+        </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}

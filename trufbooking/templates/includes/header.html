@@ -8,17 +8,38 @@
 
         <!-- Desktop Menu -->
         <nav class="hidden md:flex space-x-8 text-gray-600 font-medium">
-            <a href="#" class="hover:text-green-600 transition">Home</a>
-            <a href="#" class="hover:text-green-600 transition">Turfs</a>
-            <a href="#" class="hover:text-green-600 transition">About</a>
-            <a href="#" class="hover:text-green-600 transition">Contact</a>
-        </nav>
+            <a href="{% url 'web:index' %}"
+                class="block roundedtransition-all duration-300 ease-in-out hover:text-green-500  hover:-translate-y-1">Home</a>
+            <a href="{% url 'web:turf_list' %}"
+                class="block roundedtransition-all duration-300 ease-in-out hover:text-green-500  hover:-translate-y-1">Turfs</a>
+            <a href="{% url 'web:my_bookings' %}"
+                class="block roundedtransition-all duration-300 ease-in-out hover:text-green-500  hover:-translate-y-1">Booking
+                List</a>
+            <a href="#"
+                class="block roundedtransition-all duration-300 ease-in-out hover:text-green-500  hover:-translate-y-1">Contact</a>
+
+            {% if user.is_agent %}
+            <a href="{% url 'web:owner_dashboard' %}"
+                class="text-red-500 block roundedtransition-all duration-300 ease-in-out hover:text-green-500  hover:-translate-y-1  font-bold">Dash board</a>
+            {% endif %}    
+        </nav> 
 
         <!-- Desktop Login Button -->
+
+
         <div class="hidden md:block">
-            <a href="#" class="px-5 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition">
-                Login
+
+            {% if user %}
+            <a href="{% url 'web:logout' %}"
+                class="px-5 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition">
+                logout
             </a>
+            {% else %}
+            <a href="{% url 'web:login' %}"
+                class="px-5 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition">
+                login
+            </a>
+            {% endif %}
         </div>
 
         <!-- Mobile Menu Button -->
@@ -35,14 +56,22 @@
         <a href="#" class="block py-2 text-gray-700 font-medium hover:text-green-600">About</a>
         <a href="#" class="block py-2 text-gray-700 font-medium hover:text-green-600">Contact</a>
 
-        <a href="#" class="block mt-3 w-full text-center py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
-            Login
+        {% if user %}
+        <a href="{% url 'web:logout' %}"
+            class="px-5 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition">
+            logout
         </a>
+        {% else %}
+        <a href="{% url 'web:login' %}"
+            class="px-5 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition">
+            login
+        </a>
+        {% endif %}
     </div>
 </header>
 
 <script>
-function toggleMenu() {
-    document.getElementById('mobileMenu').classList.toggle('hidden');
-}
+    function toggleMenu() {
+        document.getElementById('mobileMenu').classList.toggle('hidden');
+    }
 </script>

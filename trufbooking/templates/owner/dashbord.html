@@ -1,0 +1,85 @@
+{% extends 'base/web-base.html' %}
+
+{% block container %}
+{% include 'includes/owner_dashboard.html' %}
+
+<div class="max-w-6xl mx-auto mt-10 px-4">
+
+    <!-- Page Title -->
+    <div class="mb-8">
+        <h2 class="text-3xl font-bold text-green-600">
+            Owner Dashboard
+        </h2>
+        <p class="text-gray-500 mt-1">
+            Overview of your turf bookings and revenue
+        </p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
+
+        <!-- Total Turfs -->
+        <div class="bg-white p-6 rounded-lg shadow text-center">
+            <p class="text-gray-500 text-sm">Total Turfs</p>
+            <p class="text-3xl font-bold mt-2">
+                {{ totel_turfs }}
+            </p>
+        </div>
+
+        <!-- Total Bookings -->
+        <div class="bg-white p-6 rounded-lg shadow text-center">
+            <p class="text-gray-500 text-sm">Total Bookings</p>
+            <p class="text-3xl font-bold mt-2">
+                {{ totel_bookings }}
+            </p>
+        </div>
+
+        <!-- Confirmed Bookings -->
+        <div class="bg-white p-6 rounded-lg shadow text-center">
+            <p class="text-gray-500 text-sm">Confirmed</p>
+            <p class="text-3xl font-bold mt-2 text-green-600">
+                {{ confirmed_bookings }}
+            </p>
+        </div>
+
+        <!-- Cancelled Bookings -->
+        <div class="bg-white p-6 rounded-lg shadow text-center">
+            <p class="text-gray-500 text-sm">Cancelled</p>
+            <p class="text-3xl font-bold mt-2 text-red-600">
+                {{ cancelled_bookings }}
+            </p>
+        </div>
+
+        <!-- Total Revenue -->
+        <div class="bg-white p-6 rounded-lg shadow text-center">
+            <p class="text-gray-500 text-sm">Total Revenue</p>
+            <p class="text-3xl font-bold mt-2 text-green-600">
+                ₹{{ totel_revenue }}
+            </p>
+        </div>
+
+    </div>
+
+    <!-- Actions -->
+    <div class="mt-10 flex flex-wrap gap-4">
+
+        <a href="{% url 'web:owner_addturf' %}"
+           class="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700">
+            + Add New Turf
+        </a>
+
+        <a href="{% url 'web:owner_turflist' %}"
+           class="px-6 py-3 bg-gray-800 text-white rounded-md hover:bg-gray-900">
+            Manage My Turfs
+        </a>
+
+        <a href="{% url 'web:owner_bookinglist' %}"
+           class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+            View Bookings
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

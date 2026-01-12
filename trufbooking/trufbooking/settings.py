@@ -28,6 +28,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'web',
+    'user',
+    'admin_dashboard'
+    
 ]
 
 MIDDLEWARE = [
@@ -110,5 +113,10 @@ STATICFILES_DIRS=[BASE_DIR / 'static']
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+
+AUTH_USER_MODEL = 'user.User'
+AUTH_PROFILE_MODULE = 'user.user'
 
 

@@ -1,0 +1,12 @@
+{% extends "base/web-base.html" %}
+{% block container %}
+
+<h2>Edit Turf</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update</button>
+</form>
+
+{% endblock %}

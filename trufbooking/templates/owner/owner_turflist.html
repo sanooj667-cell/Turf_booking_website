@@ -1,0 +1,62 @@
+{% extends "base/web-base.html" %}
+{% block container %}
+
+<div class="max-w-6xl mx-auto mt-10 px-4">
+
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold text-green-600">
+            My Turfs
+        </h2>
+
+        <a href=""
+           class="px-5 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+            + Add Turf
+        </a>
+    </div>
+
+    {% if turfs %}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {% for turf in turfs %}
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+
+                    <img src="{{ turf.image.url }}"
+                         class="h-40 w-full object-cover">
+
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold">
+                            {{ turf.name }}
+                        </h3>
+
+                        <p class="text-gray-500 text-sm">
+                            {{ turf.location }}
+                        </p>
+
+                        <p class="mt-2 font-semibold text-green-600">
+                            ₹{{ turf.price }} / hour
+                        </p>
+
+                        <div class="mt-4 flex gap-2">
+                            <a href="{% url 'web:owner_editturf' turf.id %}"
+                               class="flex-1 text-center py-2 bg-blue-600 text-white rounded">
+                                Edit
+                            </a>
+
+                            <a href="{% url 'web:owner_deleteturf' id=turf.id %}"
+                               class="flex-1 text-center py-2 bg-red-600 text-white rounded">
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-gray-500">
+            You haven’t added any turfs yet.
+        </p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

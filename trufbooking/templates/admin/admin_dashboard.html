@@ -1,0 +1,66 @@
+{% extends "base/web-base.html" %}
+{% block container %}
+{% include 'includes/admin_header.html' %}
+
+
+
+<div class="max-w-7xl mx-auto px-6 py-8">
+
+    <!-- Heading -->
+    <h1 class="text-3xl font-bold mb-8">System Dashboard</h1>
+
+    <!-- METRICS -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+        <div class="bg-white p-5 shadow rounded">
+            <p class="text-gray-500">Users</p>
+            <p class="text-3xl font-bold">{{ total_users }}</p>
+        </div>
+        <div class="bg-white p-5 shadow rounded">
+            <p class="text-gray-500">Owners</p>
+            <p class="text-3xl font-bold">{{ total_owners }}</p>
+        </div>
+        <div class="bg-white p-5 shadow rounded">
+            <p class="text-gray-500">Turfs</p>
+            <p class="text-3xl font-bold">{{ total_turfs }}</p>
+        </div>
+        <div class="bg-white p-5 shadow rounded">
+            <p class="text-gray-500">Bookings</p>
+            <p class="text-3xl font-bold">{{ total_bookings }}</p>
+        </div>
+    </div>
+
+    <!-- QUICK ACTIONS -->
+    <h2 class="text-xl font-semibold mb-4">Quick Actions</h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
+
+
+        <a href="{% url 'admin_dashboard:user_list'%}"
+           class="bg-indigo-600 text-white text-center py-3 rounded shadow">
+            Promote User → Owner
+        </a>
+
+        <a href="{% url 'admin_dashboard:today_bookings' %}"
+           class="bg-green-600 text-white text-center py-3 rounded shadow">
+            Today’s Bookings
+        </a>
+
+    </div>
+
+    <!-- TODAY SNAPSHOT -->
+    <div class="bg-white shadow rounded p-6">
+        <h2 class="text-xl font-semibold mb-4">Today Overview</h2>
+
+        <p class="text-gray-600">
+            Today’s bookings:
+            <span class="font-bold text-lg">{{ today_bookings }}</span>
+        </p>
+
+        <p class="text-gray-600 mt-2">
+            Total revenue:
+            <span class="font-bold text-lg">₹ {{ total_revenue }}</span>
+        </p>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base/web-base.html" %}
+{% block container %}
+{% include "includes/header.html" %}
+
+<div class="max-w-6xl mx-auto mt-10 px-4">
+
+    <h2 class="text-3xl font-bold text-green-600 mb-6">
+        Turf Bookings
+    </h2>
+
+    {% if bookings %}
+        <div class="bg-white rounded-lg shadow overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-2 text-left">Turf</th>
+                        <th class="px-4 py-2 text-left">Customer</th>
+                        <th class="px-4 py-2 text-center">Date</th>
+                        <th class="px-4 py-2 text-center">Time</th>
+                        <th class="px-4 py-2 text-center">Status</th>
+                        <th class="px-4 py-2 text-center">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr class="border-t">
+                            <td class="px-4 py-2">
+                                {{ booking.turf.name }}
+                            </td>
+                            <td class="px-4 py-2">
+                                {{ booking.user.email }}
+                            </td>
+                            <td class="px-4 py-2 text-center">
+                                {{ booking.booking_date }}
+                            </td>
+                            <td class="px-4 py-2 text-center">
+                                {{ booking.start_time }} – {{ booking.end_time }}
+                            </td>
+                            <td class="px-4 py-2 text-center">
+                                {% if booking.status == "CONFIRMED" %}
+                                    <span class="text-green-600 font-semibold">
+                                        Confirmed
+                                    </span>
+                                {% elif booking.status == "CANCELLED" %}
+                                    <span class="text-red-600 font-semibold">
+                                        Cancelled
+                                    </span>
+                                {% else %}
+                                    <span class="text-gray-600">
+                                        {{ booking.status }}
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td class="px-4 py-2 text-center">
+                                ₹{{ booking.totel_price }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-gray-500">
+            No bookings for your turfs yet.
+        </p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

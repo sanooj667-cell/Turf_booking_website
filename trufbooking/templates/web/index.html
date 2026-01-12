@@ -71,15 +71,23 @@
                 <h4 class="text-lg font-bold text-gray-700">{{ tur.name }}</h4>
                 <p class="text-gray-500 text-sm mb-3">{{tur.location}}</p>
                 <p class="font-bold text-green-600">₹{{ tur.price }} / hour</p>
-                <a href="{% url 'web:single_turf' tur.id %}" class="mt-3 w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 block text-center">
-                    Book Now
+                <a href="{% url 'web:single_turf' tur.id %}" class="mt-3 w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-800 block text-center">
+                    VIEW DETAILS
                 </a>
-
             </div>
         </div>
         {% endfor %}
     </div>
+
+    <div class="flex justify-center mt-10">
+        <a href="{% url 'web:turf_list' %}"
+        class="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+            Show More Turfs
+        </a>
+    </div>
 </section>
+
+
 
 
 <!-- FOOTER -->
