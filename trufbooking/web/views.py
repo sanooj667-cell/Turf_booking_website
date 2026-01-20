@@ -112,7 +112,8 @@ def register(request):
         User.objects.create_user(
             email = email,
             password=password,
-            first_name=name
+            first_name=name,
+            is_customer=True
         )
 
         messages.success(request, "Account created successfully! Please login.")
