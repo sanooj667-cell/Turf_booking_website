@@ -1,85 +1,57 @@
-{% extends 'base/web-base.html' %}
+﻿{% extends 'base/web-base.html' %}
 
 {% block container %}
 {% include 'includes/owner_dashboard.html' %}
 
-<div class="max-w-6xl mx-auto mt-10 px-4">
-
-    <!-- Page Title -->
-    <div class="mb-8">
-        <h2 class="text-3xl font-bold text-green-600">
-            Owner Dashboard
-        </h2>
-        <p class="text-gray-500 mt-1">
-            Overview of your turf bookings and revenue
-        </p>
-    </div>
-
-    <!-- Stats Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
-
-        <!-- Total Turfs -->
-        <div class="bg-white p-6 rounded-lg shadow text-center">
-            <p class="text-gray-500 text-sm">Total Turfs</p>
-            <p class="text-3xl font-bold mt-2">
-                {{ totel_turfs }}
-            </p>
+<main class="site-shell py-10 space-y-8">
+    <section class="surface-panel p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+            <span class="eyebrow">Owner Overview</span>
+            <h1 class="page-title mt-2">Manage your turf business</h1>
+            <p class="muted mt-2">Track active listings, booking activity, and revenue at a glance.</p>
         </div>
+        <a href="{% url 'web:owner_addturf' %}" class="btn btn-primary">Add New Turf</a>
+    </section>
 
-        <!-- Total Bookings -->
-        <div class="bg-white p-6 rounded-lg shadow text-center">
-            <p class="text-gray-500 text-sm">Total Bookings</p>
-            <p class="text-3xl font-bold mt-2">
-                {{ totel_bookings }}
-            </p>
-        </div>
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <article class="soft-card metric-card p-5 reveal">
+            <p class="muted text-sm">Total Turfs</p>
+            <p class="stat-number mt-3">{{ totel_turfs }}</p>
+        </article>
+        <article class="soft-card metric-card p-5 reveal reveal-delay-1">
+            <p class="muted text-sm">Total Bookings</p>
+            <p class="stat-number mt-3">{{ totel_bookings }}</p>
+        </article>
+        <article class="soft-card metric-card p-5 reveal reveal-delay-1">
+            <p class="muted text-sm">Confirmed</p>
+            <p class="stat-number mt-3 text-emerald-700">{{ confirmed_bookings }}</p>
+        </article>
+        <article class="soft-card metric-card p-5 reveal reveal-delay-2">
+            <p class="muted text-sm">Cancelled</p>
+            <p class="stat-number mt-3 text-rose-700">{{ cancelled_bookings }}</p>
+        </article>
+        <article class="soft-card metric-card p-5 reveal reveal-delay-2">
+            <p class="muted text-sm">Total Revenue</p>
+            <p class="stat-number mt-3 text-emerald-700">&#8377;{{ totel_revenue }}</p>
+        </article>
+    </section>
 
-        <!-- Confirmed Bookings -->
-        <div class="bg-white p-6 rounded-lg shadow text-center">
-            <p class="text-gray-500 text-sm">Confirmed</p>
-            <p class="text-3xl font-bold mt-2 text-green-600">
-                {{ confirmed_bookings }}
-            </p>
-        </div>
-
-        <!-- Cancelled Bookings -->
-        <div class="bg-white p-6 rounded-lg shadow text-center">
-            <p class="text-gray-500 text-sm">Cancelled</p>
-            <p class="text-3xl font-bold mt-2 text-red-600">
-                {{ cancelled_bookings }}
-            </p>
-        </div>
-
-        <!-- Total Revenue -->
-        <div class="bg-white p-6 rounded-lg shadow text-center">
-            <p class="text-gray-500 text-sm">Total Revenue</p>
-            <p class="text-3xl font-bold mt-2 text-green-600">
-                ₹{{ totel_revenue }}
-            </p>
-        </div>
-
-    </div>
-
-    <!-- Actions -->
-    <div class="mt-10 flex flex-wrap gap-4">
-
-        <a href="{% url 'web:owner_addturf' %}"
-           class="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700">
-            + Add New Turf
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <a href="{% url 'web:owner_turflist' %}" class="soft-card p-5 hover:-translate-y-0.5 transition">
+            <p class="badge badge-primary">Inventory</p>
+            <h2 class="text-lg font-semibold mt-3">Manage Turfs</h2>
+            <p class="muted mt-2 text-sm">Update location, pricing, photos, and descriptions.</p>
         </a>
-
-        <a href="{% url 'web:owner_turflist' %}"
-           class="px-6 py-3 bg-gray-800 text-white rounded-md hover:bg-gray-900">
-            Manage My Turfs
+        <a href="{% url 'web:owner_bookinglist' %}" class="soft-card p-5 hover:-translate-y-0.5 transition">
+            <p class="badge badge-primary">Operations</p>
+            <h2 class="text-lg font-semibold mt-3">View Bookings</h2>
+            <p class="muted mt-2 text-sm">Check customer bookings and current statuses.</p>
         </a>
-
-        <a href="{% url 'web:owner_bookinglist' %}"
-           class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-            View Bookings
+        <a href="{% url 'web:owner_addturf' %}" class="soft-card p-5 hover:-translate-y-0.5 transition">
+            <p class="badge badge-primary">Growth</p>
+            <h2 class="text-lg font-semibold mt-3">Add New Turf</h2>
+            <p class="muted mt-2 text-sm">Publish another turf and start accepting bookings.</p>
         </a>
-
-    </div>
-
-</div>
-
+    </section>
+</main>
 {% endblock %}

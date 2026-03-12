@@ -1,73 +1,66 @@
-{% extends "base/web-base.html" %}
+﻿{% extends 'base/web-base.html' %}
+
 {% block container %}
 {% include 'includes/admin_header.html' %}
 
+<main class="site-shell py-10 space-y-8">
+    <section class="surface-panel p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+            <span class="eyebrow">Accounts</span>
+            <h1 class="page-title mt-2">User Management</h1>
+            <p class="muted mt-2">Promote active users to owner role directly from this list.</p>
+        </div>
+    </section>
 
-<div class="max-w-5xl mx-auto mt-10 bg-white p-4 sm:p-6 shadow rounded">
-
-    <h2 class="text-xl sm:text-2xl font-bold mb-6">
-        User List
-    </h2>
-
-    <!-- Responsive wrapper -->
-    <div class="overflow-x-auto">
-        <table class="w-full border min-w-[600px]">
-            <thead class="bg-gray-100">
+    <section class="table-shell">
+        <table class="data-table">
+            <thead>
                 <tr>
-                    <th class="border px-4 py-2 text-left">Email</th>
-                    <th class="border px-4 py-2 text-left">Role</th>
-                    <th class="border px-4 py-2 text-left">Status</th>
-                    <th class="border px-4 py-2 text-left">Promote</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Action</th>
                 </tr>
             </thead>
-
             <tbody>
                 {% for user in users %}
-                <tr class="hover:bg-gray-50">
-                    <td class="border px-4 py-2 break-all">
-                        {{ user.email }}
-                    </td>
-
-                    <td class="border px-4 py-2">
+                <tr>
+                    <td class="break-all">{{ user.email }}</td>
+                    <td>
                         {% if user.is_agent %}
-                        <span class="text-green-600 font-semibold">Owner</span>
+                        <span class="status-pill status-booked">Owner</span>
+                        {% elif user.is_manager %}
+                        <span class="status-pill status-default">Admin</span>
                         {% else %}
-                        <span class="text-gray-700">User</span>
+                        <span class="status-pill status-default">User</span>
                         {% endif %}
                     </td>
-
-                    <td class="border px-4 py-2">
+                    <td>
                         {% if user.is_active %}
-                        <span class="text-green-600">Active</span>
+                        <span class="status-pill status-booked">Active</span>
                         {% else %}
-                        <span class="text-red-600">Inactive</span>
+                        <span class="status-pill status-cancelled">Inactive</span>
                         {% endif %}
                     </td>
-
-                    <td class="border px-4 py-2">
+                    <td>
                         {% if not user.is_agent %}
-                        <a href="{% url 'admin_dashboard:user_promte' user.id %}"
-                            class="bg-green-600 text-white px-2 py-1 rounded-md text-sm"
-                            onclick="return confirm('Promote this user to Owner?');">
-                            Promote
-                        </a>
+                        <a href="{% url 'admin_dashboard:user_promte' user.id %}" class="btn btn-secondary" onclick="return confirm('Promote this user to owner?');">Promote</a>
                         {% else %}
-                        <span class="text-gray-500 text-sm">Already Owner</span>
+                        <span class="muted text-sm">Already owner</span>
                         {% endif %}
-
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4" class="text-center py-4 text-gray-500">
-                        No users found
+                    <td colspan="4">
+                        <div class="empty-state">
+                            <p class="font-semibold">No users found</p>
+                        </div>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-    </div>
-
-</div>
-
+    </section>
+</main>
 {% endblock %}

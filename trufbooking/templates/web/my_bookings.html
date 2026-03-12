@@ -1,74 +1,67 @@
-{% extends 'base/web-base.html' %}
+﻿{% extends 'base/web-base.html' %}
 
 {% block container %}
 {% include 'includes/header.html' %}
 
-
-
-<div class="max-w-5xl mx-auto mt-10 px-4">
-
-    <h2 class="text-3xl font-bold mb-6 text-green-600">
-        My Bookings
-    </h2>
+<main class="site-shell py-10 space-y-8">
+    <section class="surface-panel p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+            <span class="eyebrow">Bookings</span>
+            <h1 class="page-title mt-2">My Booking History</h1>
+            <p class="muted mt-2">Track confirmed slots and manage cancellations quickly.</p>
+        </div>
+        <a href="{% url 'web:turf_list' %}" class="btn btn-secondary">Book Another Turf</a>
+    </section>
 
     {% if bookings %}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {% for booking in bookings %}
-                <div class="bg-white p-5 rounded-lg shadow">
-
-                    <h3 class="text-xl font-bold text-gray-800">
-                        {{ booking.turf.name }} ({{ booking.turf.category }})
-                    </h3>
-
-                    <p class="text-gray-600 mt-1">
-                        {{ booking.turf.location }}
-                    </p>
-
-                    <p class="mt-2">
-                        <span class="font-semibold">Date:</span>
-                        {{ booking.booking_date }}
-                    </p>
-
-                    <p>
-                        <span class="font-semibold">Time:</span>
-                        {{ booking.start_time }} – {{ booking.end_time }}
-                    </p>
-
-                    <p class="mt-2">
-                        <span class="font-semibold">Status:</span>
-                        {{ booking.status }}
-                    </p>
-
-                    <p class="mt-2 text-green-600 font-bold">
-                        ₹{{ booking.totel_price }}
-                    </p>
-
-                    <!-- 🔴 REMOVE / CANCEL BUTTON -->
-                     {% if booking.status != "CANCELLED" %}
-                    <a href="{% url 'web:cancel_booking' booking.id%}"
-                       class="mt-4 inline-block px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
-                        Cancel Booking
-                    </a>
-                    {% endif %}
-
-                    {% if booking.status == "CANCELLED" %}
-                    <a href="{% url 'web:delete_booking' booking.id%}"
-                       class="mt-4 inline-block px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
-                        delete form history
-                    </a>
-                    {% endif %}
-
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {% for booking in bookings %}
+        <article class="soft-card p-5 space-y-4 reveal reveal-delay-1">
+            <div class="flex items-start justify-between gap-3">
+                <div>
+                    <h2 class="text-xl font-semibold">{{ booking.turf.name }}</h2>
+                    <p class="muted text-sm">{{ booking.turf.location }}</p>
                 </div>
-            {% endfor %}
-        </div>
+                {% if booking.status == "BOOKED" %}
+                <span class="status-pill status-booked">Booked</span>
+                {% elif booking.status == "CANCELLED" %}
+                <span class="status-pill status-cancelled">Cancelled</span>
+                {% else %}
+                <span class="status-pill status-default">{{ booking.status }}</span>
+                {% endif %}
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                    <p class="muted">Date</p>
+                    <p class="font-semibold">{{ booking.booking_date }}</p>
+                </div>
+                <div>
+                    <p class="muted">Time</p>
+                    <p class="font-semibold">{{ booking.start_time }} - {{ booking.end_time }}</p>
+                </div>
+            </div>
+
+            <p class="text-xl font-bold text-emerald-700">&#8377;{{ booking.totel_price }}</p>
+
+            <div class="flex flex-wrap gap-3">
+                {% if booking.status != "CANCELLED" %}
+                <a href="{% url 'web:cancel_booking' booking.id %}" class="btn btn-danger">Cancel Booking</a>
+                {% else %}
+                <a href="{% url 'web:delete_booking' booking.id %}" class="btn btn-ghost">Delete from History</a>
+                {% endif %}
+            </div>
+        </article>
+        {% endfor %}
+    </section>
     {% else %}
-        <div class="bg-white p-6 rounded-lg shadow">
-            <p class="text-gray-600 text-center">
-                You have no bookings yet.
-            </p>
-        </div>
+    <section class="empty-state">
+        <h2 class="text-lg font-semibold">No bookings yet</h2>
+        <p class="muted mt-2">Your confirmed bookings will appear here once you reserve a turf.</p>
+        <a href="{% url 'web:turf_list' %}" class="btn btn-primary mt-4">Explore Turfs</a>
+    </section>
     {% endif %}
+</main>
 
-</div>
-
+{% include 'includes/footer.html' %}
 {% endblock %}

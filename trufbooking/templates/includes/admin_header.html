@@ -1,36 +1,48 @@
-{% load static %}
+﻿{% load static %}
 
-<!-- ADMIN HEADER -->
-<header class="bg-white shadow">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
-        <!-- LEFT: Back + Title -->
-        <div class="flex items-center gap-4">
-
-            <!-- Back Button -->
-            <button onclick="history.back()"
-                class="flex items-center gap-1 text-sm text-gray-600 hover:text-blue-600 transition">
-                <img src="{% static 'images/left-arrow.png' %}" alt="" class="w-[23px]">
-            </button>
-
-            <!-- Admin Title -->
-
-                <h1 class="text-xl font-bold text-gray-800">
-                    Admin Dashboard
-                </h1>
+<header class="sticky top-0 z-40 border-b border-white/70 bg-white/80 backdrop-blur">
+    <div class="site-shell py-4 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <a href="{% url 'web:index' %}" class="btn btn-ghost !w-auto px-3 py-2">Back to Site</a>
+            <div>
+                <p class="brand-mark">Admin Suite</p>
+                <p class="text-xs muted">Platform controls and insights</p>
+            </div>
         </div>
 
-        <!-- RIGHT: User + Logout -->
-        <div class="flex items-center gap-4">
-            <span class="text-sm text-gray-600">
-                {{ request.user.email }}
-            </span>
+        <nav class="hidden lg:flex items-center gap-1">
+            <a href="{% url 'admin_dashboard:dashboard' %}" class="top-nav-link">Dashboard</a>
+            <a href="{% url 'admin_dashboard:user_list' %}" class="top-nav-link">Users</a>
+            <a href="{% url 'admin_dashboard:today_bookings' %}" class="top-nav-link">Today Bookings</a>
+        </nav>
 
-            <a href=""
-               class="text-sm bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
-                Logout
-            </a>
+        <div class="hidden lg:flex items-center gap-3">
+            <span class="user-email">{{ request.user.email }}</span>
+            <a href="{% url 'web:logout' %}" class="btn btn-ghost">Logout</a>
         </div>
 
+        <button id="admin-menu-toggle" class="lg:hidden btn btn-ghost !w-auto px-3 py-2" type="button" aria-label="Open admin menu">
+            Menu
+        </button>
+    </div>
+
+    <div id="admin-mobile-menu" class="hidden lg:hidden border-t border-white/70 bg-white/90">
+        <div class="site-shell py-3 flex flex-col gap-2">
+            <a href="{% url 'admin_dashboard:dashboard' %}" class="top-nav-link">Dashboard</a>
+            <a href="{% url 'admin_dashboard:user_list' %}" class="top-nav-link">Users</a>
+            <a href="{% url 'admin_dashboard:today_bookings' %}" class="top-nav-link">Today Bookings</a>
+            <a href="{% url 'web:logout' %}" class="btn btn-ghost">Logout</a>
+        </div>
     </div>
 </header>
+
+<script>
+(() => {
+    const toggle = document.getElementById("admin-menu-toggle");
+    const menu = document.getElementById("admin-mobile-menu");
+    if (!toggle || !menu) return;
+    toggle.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+    });
+})();
+</script>

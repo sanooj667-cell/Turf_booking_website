@@ -1,70 +1,57 @@
-{% extends "base/web-base.html" %}
+﻿{% extends 'base/web-base.html' %}
+
 {% block container %}
-{% include "includes/header.html" %}
+{% include 'includes/owner_dashboard.html' %}
 
-<div class="max-w-6xl mx-auto mt-10 px-4">
-
-    <h2 class="text-3xl font-bold text-green-600 mb-6">
-        Turf Bookings
-    </h2>
+<main class="site-shell py-10 space-y-8">
+    <section class="surface-panel p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+            <span class="eyebrow">Bookings</span>
+            <h1 class="page-title mt-2">Turf Booking List</h1>
+            <p class="muted mt-2">Monitor customer reservations across all your listed turfs.</p>
+        </div>
+    </section>
 
     {% if bookings %}
-        <div class="bg-white rounded-lg shadow overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead class="bg-gray-100">
-                    <tr>
-                        <th class="px-4 py-2 text-left">Turf</th>
-                        <th class="px-4 py-2 text-left">Customer</th>
-                        <th class="px-4 py-2 text-center">Date</th>
-                        <th class="px-4 py-2 text-center">Time</th>
-                        <th class="px-4 py-2 text-center">Status</th>
-                        <th class="px-4 py-2 text-center">Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for booking in bookings %}
-                        <tr class="border-t">
-                            <td class="px-4 py-2">
-                                {{ booking.turf.name }}
-                            </td>
-                            <td class="px-4 py-2">
-                                {{ booking.user.email }}
-                            </td>
-                            <td class="px-4 py-2 text-center">
-                                {{ booking.booking_date }}
-                            </td>
-                            <td class="px-4 py-2 text-center">
-                                {{ booking.start_time }} – {{ booking.end_time }}
-                            </td>
-                            <td class="px-4 py-2 text-center">
-                                {% if booking.status == "CONFIRMED" %}
-                                    <span class="text-green-600 font-semibold">
-                                        Confirmed
-                                    </span>
-                                {% elif booking.status == "CANCELLED" %}
-                                    <span class="text-red-600 font-semibold">
-                                        Cancelled
-                                    </span>
-                                {% else %}
-                                    <span class="text-gray-600">
-                                        {{ booking.status }}
-                                    </span>
-                                {% endif %}
-                            </td>
-                            <td class="px-4 py-2 text-center">
-                                ₹{{ booking.totel_price }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+    <section class="table-shell">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Turf</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.turf.name }}</td>
+                    <td>{{ booking.user.email }}</td>
+                    <td>{{ booking.booking_date }}</td>
+                    <td>{{ booking.start_time }} - {{ booking.end_time }}</td>
+                    <td>
+                        {% if booking.status == "BOOKED" %}
+                        <span class="status-pill status-booked">Booked</span>
+                        {% elif booking.status == "CANCELLED" %}
+                        <span class="status-pill status-cancelled">Cancelled</span>
+                        {% else %}
+                        <span class="status-pill status-default">{{ booking.status }}</span>
+                        {% endif %}
+                    </td>
+                    <td>&#8377;{{ booking.totel_price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
     {% else %}
-        <p class="text-gray-500">
-            No bookings for your turfs yet.
-        </p>
+    <section class="empty-state">
+        <h2 class="text-lg font-semibold">No bookings yet</h2>
+        <p class="muted mt-2">Bookings will appear here once players reserve your turfs.</p>
+    </section>
     {% endif %}
-
-</div>
-
+</main>
 {% endblock %}

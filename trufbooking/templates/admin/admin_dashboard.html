@@ -1,66 +1,60 @@
-{% extends "base/web-base.html" %}
+﻿{% extends 'base/web-base.html' %}
+
 {% block container %}
 {% include 'includes/admin_header.html' %}
 
+<main class="site-shell py-10 space-y-8">
+    <section class="surface-panel p-6 md:p-8">
+        <span class="eyebrow">System Health</span>
+        <h1 class="page-title mt-2">Platform Dashboard</h1>
+        <p class="muted mt-2">Real-time snapshot of users, turf listings, and booking flow.</p>
+    </section>
 
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <article class="soft-card metric-card p-5 reveal">
+            <p class="muted text-sm">Total Users</p>
+            <p class="stat-number mt-3">{{ total_users }}</p>
+        </article>
+        <article class="soft-card metric-card p-5 reveal reveal-delay-1">
+            <p class="muted text-sm">Total Owners</p>
+            <p class="stat-number mt-3">{{ total_owners }}</p>
+        </article>
+        <article class="soft-card metric-card p-5 reveal reveal-delay-1">
+            <p class="muted text-sm">Total Turfs</p>
+            <p class="stat-number mt-3">{{ total_turfs }}</p>
+        </article>
+        <article class="soft-card metric-card p-5 reveal reveal-delay-2">
+            <p class="muted text-sm">Total Bookings</p>
+            <p class="stat-number mt-3">{{ total_bookings }}</p>
+        </article>
+    </section>
 
-<div class="max-w-7xl mx-auto px-6 py-8">
-
-    <!-- Heading -->
-    <h1 class="text-3xl font-bold mb-8">System Dashboard</h1>
-
-    <!-- METRICS -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
-        <div class="bg-white p-5 shadow rounded">
-            <p class="text-gray-500">Users</p>
-            <p class="text-3xl font-bold">{{ total_users }}</p>
-        </div>
-        <div class="bg-white p-5 shadow rounded">
-            <p class="text-gray-500">Owners</p>
-            <p class="text-3xl font-bold">{{ total_owners }}</p>
-        </div>
-        <div class="bg-white p-5 shadow rounded">
-            <p class="text-gray-500">Turfs</p>
-            <p class="text-3xl font-bold">{{ total_turfs }}</p>
-        </div>
-        <div class="bg-white p-5 shadow rounded">
-            <p class="text-gray-500">Bookings</p>
-            <p class="text-3xl font-bold">{{ total_bookings }}</p>
-        </div>
-    </div>
-
-    <!-- QUICK ACTIONS -->
-    <h2 class="text-xl font-semibold mb-4">Quick Actions</h2>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
-
-
-        <a href="{% url 'admin_dashboard:user_list'%}"
-           class="bg-indigo-600 text-white text-center py-3 rounded shadow">
-            Promote User → Owner
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="{% url 'admin_dashboard:user_list' %}" class="soft-card p-5 hover:-translate-y-0.5 transition">
+            <p class="badge badge-primary">Users</p>
+            <h2 class="text-lg font-semibold mt-3">Promote User to Owner</h2>
+            <p class="muted mt-2 text-sm">Review user accounts and grant owner access where needed.</p>
         </a>
 
-        <a href="{% url 'admin_dashboard:today_bookings' %}"
-           class="bg-green-600 text-white text-center py-3 rounded shadow">
-            Today’s Bookings
+        <a href="{% url 'admin_dashboard:today_bookings' %}" class="soft-card p-5 hover:-translate-y-0.5 transition">
+            <p class="badge badge-primary">Daily Ops</p>
+            <h2 class="text-lg font-semibold mt-3">View Today Bookings</h2>
+            <p class="muted mt-2 text-sm">Track all bookings created for today and their current status.</p>
         </a>
+    </section>
 
-    </div>
-
-    <!-- TODAY SNAPSHOT -->
-    <div class="bg-white shadow rounded p-6">
-        <h2 class="text-xl font-semibold mb-4">Today Overview</h2>
-
-        <p class="text-gray-600">
-            Today’s bookings:
-            <span class="font-bold text-lg">{{ today_bookings }}</span>
-        </p>
-
-        <p class="text-gray-600 mt-2">
-            Total revenue:
-            <span class="font-bold text-lg">₹ {{ total_revenue }}</span>
-        </p>
-    </div>
-
-</div>
-
+    <section class="soft-card p-6 md:p-7">
+        <h2 class="section-title">Today Summary</h2>
+        <div class="grid sm:grid-cols-2 gap-6 mt-5">
+            <div>
+                <p class="muted text-sm">Today Bookings</p>
+                <p class="stat-number mt-2">{{ today_bookings }}</p>
+            </div>
+            <div>
+                <p class="muted text-sm">Today Revenue</p>
+                <p class="stat-number mt-2 text-emerald-700">&#8377;{{ total_revenue }}</p>
+            </div>
+        </div>
+    </section>
+</main>
 {% endblock %}

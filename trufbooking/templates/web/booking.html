@@ -1,66 +1,47 @@
-{% extends 'base/web-base.html' %}
+﻿{% extends 'base/web-base.html' %}
 
 {% block container %}
+{% include 'includes/header.html' %}
 
-<div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded-lg shadow">
+<main class="site-shell py-10">
+    <section class="max-w-3xl mx-auto surface-panel p-6 md:p-8 space-y-6">
+        <div>
+            <span class="eyebrow">Reserve Slot</span>
+            <h1 class="page-title mt-2">Book {{ turf.name }}</h1>
+            <p class="muted mt-2">{{ turf.location }}</p>
+            <p class="text-2xl font-bold text-emerald-700 mt-2">&#8377;{{ turf.price }} <span class="text-sm font-medium muted">/ hour</span></p>
+        </div>
 
-    <h2 class="text-2xl font-bold mb-4 text-green-600">
-        Book {{ turf.name }}
-    </h2>
+        {% include 'includes/messages.html' %}
 
-            {% if messages %}
-            <div class="space-y-2 mb-4">
-                {% for message in messages %}
-                    <div class="
-                    px-4 py-3 rounded-lg text-white 
-                    {% if message.tags == 'error' %} bg-red-500 
-                    {% elif message.tags == 'success' %} bg-green-600 
-                    {% elif message.tags == 'warning' %} bg-yellow-500 
-                    {% else %} bg-blue-500 {% endif %}
-                    ">
-                        {{ message }}
-                    </div>
-                {% endfor %}
+        <form method="POST" class="form-shell space-y-5">
+            {% csrf_token %}
+
+            <div>
+                <label for="booking-date" class="form-label">Booking Date</label>
+                <input id="booking-date" type="date" name="date" required>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <label for="start-time" class="form-label">Start Time</label>
+                    <input id="start-time" type="time" name="start_time" required>
                 </div>
-         {% endif %}
+                <div>
+                    <label for="end-time" class="form-label">End Time</label>
+                    <input id="end-time" type="time" name="end_time" required>
+                </div>
+            </div>
 
+            <p class="text-sm muted">Final price is calculated automatically based on booked hours.</p>
 
-    <p class="text-gray-600 mb-2">{{ turf.location }}</p>
-    <p class="text-green-600 font-semibold mb-4">
-        ₹{{ turf.price }} / hour
-    </p>
+            <div class="flex flex-wrap gap-3">
+                <button type="submit" class="btn btn-primary">Confirm Booking</button>
+                <a href="{% url 'web:single_turf' turf.id %}" class="btn btn-ghost">Back to Turf</a>
+            </div>
+        </form>
+    </section>
+</main>
 
-    <form method="POST">
-        {% csrf_token %}
-
-        <div class="mb-4">
-            <label class="block mb-1 font-medium">Date</label>
-            <input type="date" name="date" required
-                   class="w-full border px-3 py-2 rounded">
-        </div>
-
-        <div class="mb-4">
-            <label class="block mb-1 font-medium">Start Time</label>
-            <input type="time" name="start_time" required
-                   class="w-full border px-3 py-2 rounded">
-        </div>
-
-        <div class="mb-4">
-            <label class="block mb-1 font-medium">End Time</label>
-            <input type="time" name="end_time" required
-                   class="w-full border px-3 py-2 rounded">
-        </div>
-        
-        <div class="mb-4"> 
-            <h3 class="font-medium text-red-500">TOTEL PRICE:{{ booking.totel_price }} </h3>
-        </div>
-
-
-        <button class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
-            Confirm Booking 
-        </button>
-    </form>
-
-</div>
-
+{% include 'includes/footer.html' %}
 {% endblock %}

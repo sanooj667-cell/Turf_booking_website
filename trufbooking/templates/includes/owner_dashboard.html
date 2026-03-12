@@ -1,40 +1,50 @@
-{% load static %}
+﻿{% load static %}
 
-<!-- OWNER HEADER -->
-<header class="bg-white shadow">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
-        <!-- LEFT: Back + Title -->
-        <div class="flex items-center gap-4">
-
-            <!-- Back Button -->
-            <button onclick="history.back()"
-                class="flex items-center gap-1 text-sm text-gray-600 hover:text-green-600 transition">
-                ← Back
-            </button>
-
-            <!-- Title -->
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-green-600 text-white flex items-center justify-center rounded-lg font-bold">
-                    O
-                </div>
-                <h1 class="text-xl font-bold text-gray-800">
-                    Owner Dashboard
-                </h1>
+<header class="sticky top-0 z-40 border-b border-white/70 bg-white/80 backdrop-blur">
+    <div class="site-shell py-4 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <a href="{% url 'web:index' %}" class="btn btn-ghost !w-auto px-3 py-2">Back to Site</a>
+            <div>
+                <p class="brand-mark">Owner Hub</p>
+                <p class="text-xs muted">Manage your turfs and bookings</p>
             </div>
         </div>
 
-        <!-- RIGHT: User + Logout -->
-        <div class="flex items-center gap-4">
-            <span class="text-sm text-gray-600">
-                {{ request.user.email }}
-            </span>
+        <nav class="hidden lg:flex items-center gap-1">
+            <a href="{% url 'web:owner_dashboard' %}" class="top-nav-link">Dashboard</a>
+            <a href="{% url 'web:owner_turflist' %}" class="top-nav-link">My Turfs</a>
+            <a href="{% url 'web:owner_bookinglist' %}" class="top-nav-link">Bookings</a>
+            <a href="{% url 'web:owner_addturf' %}" class="top-nav-link">Add Turf</a>
+        </nav>
 
-            <a href=""
-               class="text-sm bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
-                Logout
-            </a>
+        <div class="hidden lg:flex items-center gap-3">
+            <span class="user-email">{{ request.user.email }}</span>
+            <a href="{% url 'web:logout' %}" class="btn btn-ghost">Logout</a>
         </div>
 
+        <button id="owner-menu-toggle" class="lg:hidden btn btn-ghost !w-auto px-3 py-2" type="button" aria-label="Open owner menu">
+            Menu
+        </button>
+    </div>
+
+    <div id="owner-mobile-menu" class="hidden lg:hidden border-t border-white/70 bg-white/90">
+        <div class="site-shell py-3 flex flex-col gap-2">
+            <a href="{% url 'web:owner_dashboard' %}" class="top-nav-link">Dashboard</a>
+            <a href="{% url 'web:owner_turflist' %}" class="top-nav-link">My Turfs</a>
+            <a href="{% url 'web:owner_bookinglist' %}" class="top-nav-link">Bookings</a>
+            <a href="{% url 'web:owner_addturf' %}" class="top-nav-link">Add Turf</a>
+            <a href="{% url 'web:logout' %}" class="btn btn-ghost">Logout</a>
+        </div>
     </div>
 </header>
+
+<script>
+(() => {
+    const toggle = document.getElementById("owner-menu-toggle");
+    const menu = document.getElementById("owner-mobile-menu");
+    if (!toggle || !menu) return;
+    toggle.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+    });
+})();
+</script>
